@@ -34,7 +34,7 @@ npx serve .
 
 ## Live Demo
 
-_Link will be added after deployment._
+**https://malikahsandevi.github.io/weather-app/**
 
 ## Note on the API Key
 
