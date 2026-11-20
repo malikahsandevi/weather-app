@@ -420,6 +420,14 @@ body.theme-snow {
   font-weight: 500;
 }
 .footer b { color: var(--ink); }
+.footer a {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+.footer a:hover { color: var(--accent); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 760px) {
