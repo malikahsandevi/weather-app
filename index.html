@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App — Live Weather for Any City</title>
+    <meta
+      name="description"
+      content="A modern weather app: search any city to see live temperature, feels-like, wind, humidity, visibility, UV index and pressure — with a background that matches the sky."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="theme-cloudy-day">
+    <div class="bg-orbs" aria-hidden="true">
+      <span class="orb orb-a"></span>
+      <span class="orb orb-b"></span>
+    </div>
+
+    <main class="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.5 1.5A4 4 0 0 0 7 19h10.5Z" />
+              <path d="M12 3v1.5M4.9 6.9l1 1M19.1 6.9l-1 1" />
+            </svg>
+          </span>
+          <span class="brand-name">Weather<b>App</b></span>
+        </div>
+
+        <div class="unit-toggle" role="group" aria-label="Temperature unit">
+          <button type="button" class="unit-btn is-active" data-unit="C">°C</button>
+          <button type="button" class="unit-btn" data-unit="F">°F</button>
+        </div>
+      </header>
+
+      <form class="searchbar" id="searchForm" role="search">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.8-3.8" />
+        </svg>
+        <input
+          class="search-input"
+          id="cityInput"
+          type="search"
+          placeholder="Search a city… e.g. Lahore, Dubai, London"
+          autocomplete="off"
+          aria-label="City name"
+        />
+        <button class="search-btn" id="searchBtn" type="submit">Search</button>
+      </form>
+
+      <div class="chips" aria-label="Popular cities">
+        <button type="button" class="chip" data-city="Rahim Yar Khan">Rahim Yar Khan</button>
+        <button type="button" class="chip" data-city="Lahore">Lahore</button>
+        <button type="button" class="chip" data-city="Karachi">Karachi</button>
+        <button type="button" class="chip" data-city="Islamabad">Islamabad</button>
+        <button type="button" class="chip" data-city="Dubai">Dubai</button>
+        <button type="button" class="chip" data-city="London">London</button>
+      </div>
+
+      <p class="error-banner" id="errorBanner" role="alert" hidden></p>
+
+      <section class="weather-card" id="weatherCard" aria-live="polite">
+        <div class="hero">
+          <div class="hero-top">
+            <p class="location">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z" />
+                <circle cx="12" cy="10" r="2.6" />
+              </svg>
+              <span id="cityName">—</span>
+            </p>
+            <p class="localtime" id="localTime">—</p>
+          </div>
+
+          <img class="condition-icon" id="conditionIcon" src="" alt="" width="128" height="128" />
+
+          <p class="temp"><span id="tempValue">--</span><span class="temp-unit" id="tempUnit">°C</span></p>
+          <p class="condition-text" id="conditionText">Loading…</p>
+
+          <div class="hero-pills">
+            <span class="pill">Feels like <b id="feelsLike">--</b></span>
+            <span class="pill" id="dayNightPill">—</span>
+          </div>
+
+          <p class="updated" id="lastUpdated">—</p>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <p class="stat-label">Wind Speed</p>
+            <p class="stat-value"><span id="windSpeed">--</span><small> km/h</small></p>
+            <p class="stat-sub">Gusts <span id="windGust">--</span> km/h</p>
+          </div>
+
+          <div class="stat">
+            <p class="stat-label">Wind Direction</p>
+            <p class="stat-value">
+              <span class="wind-arrow" id="windArrow" aria-hidden="true">➤</span>
+              <span id="windDir">--</span>
+            </p>
+            <p class="stat-sub"><span id="windDegree">--</span>° from north</p>
+          </div>
+
+          <div class="stat">
+            <p class="stat-label">Humidity</p>
+            <p class="stat-value"><span id="humidity">--</span><small>%</small></p>
+            <div class="meter"><span id="humidityMeter"></span></div>
+          </div>
+
+          <div class="stat">
+            <p class="stat-label">Visibility</p>
+            <p class="stat-value"><span id="visibility">--</span><small> km</small></p>
+            <p class="stat-sub" id="visibilityNote">—</p>
+          </div>
+
+          <div class="stat">
+            <p class="stat-label">UV Index</p>
+            <p class="stat-value"><span id="uvIndex">--</span></p>
+            <p class="stat-sub"><span class="uv-dot" id="uvDot"></span><span id="uvLevel">—</span></p>
+          </div>
+
+          <div class="stat">
+            <p class="stat-label">Pressure</p>
+            <p class="stat-value"><span id="pressure">--</span><small> mb</small></p>
+            <p class="stat-sub">Precipitation <span id="precip">--</span> mm</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Live data by WeatherAPI.com</span>
+        <span class="footer-dot" aria-hidden="true">·</span>
+        <span>Built by <b>Ahsan Ali</b> — MERN Stack Developer</span>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
